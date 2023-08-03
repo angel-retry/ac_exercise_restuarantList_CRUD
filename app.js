@@ -7,8 +7,14 @@ const port = 3000
 const db = require('./models')
 const List = db.List
 
+//設置express-handlebars
+const { engine } = require('express-handlebars')
+app.engine('.hbs', engine({ extname: '.hbs' })) //新增引擎樣板hbs，extname為預設的檔名
+app.set('view engine', '.hbs') //開始啟用hbs樣板
+app.set('views', './views') //指定views資料夾為指定的位置
+
 app.get('/', (req, res) => {
-  res.send("hello world")
+  res.render('index')
 })
 
 //取得全餐廳清單
