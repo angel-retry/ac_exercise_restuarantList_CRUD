@@ -13,6 +13,38 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      name_en: {
+        type: Sequelize.STRING,
+      },
+      category: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      image: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      location: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      phone: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      google_map: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      rating: {
+        type: Sequelize.FLOAT,
+        allowNull: false
+      },
+      description: {
+        type: Sequelize.TEXT,
+        allowNull: false
+      }
+      ,
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
