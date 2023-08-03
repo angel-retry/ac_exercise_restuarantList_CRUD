@@ -13,13 +13,21 @@ app.engine('.hbs', engine({ extname: '.hbs' })) //新增引擎樣板hbs，extnam
 app.set('view engine', '.hbs') //開始啟用hbs樣板
 app.set('views', './views') //指定views資料夾為指定的位置
 
+//載入靜態資料
+app.use(express.static('public'))
+
 app.get('/', (req, res) => {
-  res.render('index')
+  res.redirect('/lists')
 })
 
 //取得全餐廳清單
 app.get('/lists', (req, res) => {
-  res.send("get all lists")
+  return List.findAll({
+    attributes: ['id', 'image', 'name', 'category', 'rating'],
+    raw: true
+  })
+    .then((lists) => res.render('lists', { lists }))
+    .catch((err) => res.status(422).json(err))
 })
 
 //取得新增清單頁
