@@ -2,6 +2,10 @@ const express = require('express')
 const app = express()
 const port = 3000
 
+//設置model
+const db = require('./models')
+const List = db.List
+
 app.get('/', (req, res) => {
   res.send("hello world")
 })
