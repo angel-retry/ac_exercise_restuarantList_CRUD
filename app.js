@@ -42,7 +42,13 @@ app.post('/lists', (req, res) => {
 
 //取得一家餐廳頁面
 app.get('/lists/:id', (req, res) => {
-  res.send(`here is list:${req.params.id}`)
+  const id = req.params.id
+  return List.findByPk(id, {
+    attributes: ['id', 'name', 'category', 'location', 'phone', 'description', 'image', 'rating'],
+    raw: true
+  })
+    .then((list) => res.render('list', { list }))
+    .catch((err) => console.log(err))
 })
 
 //取得修改一家餐廳頁面
