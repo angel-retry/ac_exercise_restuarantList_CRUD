@@ -1,14 +1,9 @@
-{{#if alertMessage}}
-<script>
-  alert('{{alertMessage}}'); // 在页面加载时显示提示框
-</script>
-{{/if}}
 <div class="margin-top">
-  <h1 class="mb-1 restaurant-show-title">新增店家</h1>
+  <h1 class="mb-1 restaurant-show-title">修改店家資訊</h1>
   <div class="container">
     <div class="card col-8 mx-auto mb-5">
       <div class="card-body col-8 mx-auto pt-5">
-        <form action="/lists" method="POST" class="needs-validation" novalidate>
+        <form action="/lists/{{list.id}}?_method=PUT" method="POST" class="needs-validation" novalidate>
           <div class="mb-3 row">
             <div class="col">
               <label for="name" class="form-label">
@@ -16,7 +11,7 @@
                 中文店名
               </label>
               <input type="text" class="form-control" id="name" aria-describedby="emailHelp" placeholder="請輸入中文店名..."
-                name="name" required>
+                name="name" value="{{list.name}}" required>
               <div class="invalid-feedback">
                 請輸入店家店名
               </div>
@@ -25,7 +20,7 @@
             <div class="col">
               <label for="name_en" class="form-label">英文店名</label>
               <input type="text" class="form-control" id="name_en" aria-describedby="emailHelp" placeholder="請輸入英文店名..."
-                name="name_en">
+                name="name_en" value="{{list.name_en}}">
               <div class="valid-feedback">
                 英文店名可不用輸入
               </div>
@@ -38,7 +33,7 @@
               餐廳類別
             </label>
             <select class="form-select" aria-label="Default select example" id="category" name="category" required>
-              <option value="">請選擇餐廳類別</option>
+              <option value="{{list.category}}">{{list.category}}</option>
               <option value="義式餐廳">義式餐廳</option>
               <option value="美式">美式</option>
               <option value="酒吧">酒吧</option>
@@ -60,7 +55,8 @@
               <span class="text-danger">*</span>
               圖片
             </label>
-            <input type="url" class="form-control" id="image" placeholder="請輸入圖片網址URL..." name="image" required>
+            <input type="url" class="form-control" id="image" placeholder="請輸入圖片網址URL..." name="image"
+              value="{{list.image}}" required>
             <div class="invalid-feedback">
               請輸入圖片網址URL
             </div>
@@ -71,7 +67,8 @@
               <span class="text-danger">*</span>
               地址
             </label>
-            <input type="text" class="form-control" id="location" placeholder="請輸入地址..." name="location" required>
+            <input type="text" class="form-control" id="location" placeholder="請輸入地址..." name="location"
+              value="{{list.location}}" required>
             <div class="invalid-feedback">
               請輸入地址
             </div>
@@ -83,7 +80,7 @@
               google地圖網址
             </label>
             <input type="text" class="form-control" id="google_map" placeholder="請輸入google地圖網址..." name="google_map"
-              required>
+              value="{{list.google_map}}" required>
             <div class="invalid-feedback">
               請輸入google地圖網址
             </div>
@@ -94,7 +91,8 @@
               <span class="text-danger">*</span>
               電話
             </label>
-            <input type="text" class="form-control" id="phone" placeholder="請輸入電話號碼..." name="phone" required>
+            <input type="text" class="form-control" id="phone" placeholder="請輸入電話號碼..." name="phone"
+              value="{{list.phone}}" required>
             <div class="invalid-feedback">
               請輸入電話號碼
             </div>
@@ -108,7 +106,8 @@
               評分
             </label>
             <div class="col-2">
-              <input type="number" class="form-control col-2" id="rating" name="rating" max="5" min="1" required>
+              <input type="number" class="form-control col-2" id="rating" name="rating" max="5" min="1"
+                value="{{list.rating}}" required>
               <div class="invalid-feedback">
                 請輸入評分
               </div>
@@ -123,14 +122,15 @@
               店家介紹
             </label>
             <textarea name="description" id="description" cols="30" rows="10" class="form-control"
-              placeholder="請介紹此店家..." required></textarea>
+              placeholder="請介紹此店家..." required>{{list.description}}
+              </textarea>
             <div class="invalid-feedback">
               請介紹此店家
             </div>
           </div>
 
           <div class="mb-3 d-flex justify-content-center">
-            <button type="submit" class="btn btn-outline-success col-4 btn-create">Create</button>
+            <button type="submit" class="btn btn-brown col-4 btn-create">save</button>
 
           </div>
 

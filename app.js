@@ -76,12 +76,38 @@ app.get('/lists/:id', (req, res) => {
 
 //取得修改一家餐廳頁面
 app.get('/lists/:id/edit', (req, res) => {
-  res.send(`updating list page: ${req.params.id}`)
+  const id = req.params.id
+  return List.findByPk(id, {
+    attributes: ['id', 'name', 'name_en', 'category', 'image', 'location', 'phone', 'google_map', 'rating', 'description'],
+    raw: true
+  })
+    .then((list) => res.render('edit', { list }))
+    .catch((err) => console.log(err))
 })
 
 //修改一家餐廳頁面內容
-app.put('/todos', (req, res) => {
-  res.send(`updating list ${req.params.id}`)
+app.put('/lists/:id', (req, res) => {
+  const id = req.params.id
+  const data = req.body
+  return List.update({
+    name: data.name,
+    name_en: data.name_en,
+    category: data.category,
+    image: data.image,
+    location: data.location,
+    phone: data.phone,
+    google_map: data.google_map,
+    rating: data.rating,
+    description: data.description,
+  }, {
+    where: {
+      id
+    }
+  })
+    .then(() => res.redirect(`/lists/${id}`))
+    .catch((err) => console.log(err))
+
+
 })
 
 //刪除一家資訊
