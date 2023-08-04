@@ -15,6 +15,8 @@ app.set('views', './views') //指定views資料夾為指定的位置
 
 //載入靜態資料
 app.use(express.static('public'))
+app.use(express.static('utilities'))
+
 
 app.get('/', (req, res) => {
   res.redirect('/lists')
@@ -32,7 +34,7 @@ app.get('/lists', (req, res) => {
 
 //取得新增清單頁
 app.get('/lists/new', (req, res) => {
-  res.send("create new list page")
+  res.render('new')
 })
 
 //新增一家餐聽

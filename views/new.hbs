@@ -1,0 +1,141 @@
+<div class="margin-top">
+  <h1 class="mb-1 restaurant-show-title">新增店家</h1>
+  <div class="container">
+    <div class="card col-8 mx-auto ">
+      <div class="card-body col-8 mx-auto pt-5">
+        <form action="" class="needs-validation" novalidate>
+          <div class="mb-3 row">
+            <div class="col">
+              <label for="name" class="form-label">
+                <span class="text-danger">*</span>
+                中文店名
+              </label>
+              <input type="text" class="form-control" id="name" aria-describedby="emailHelp" placeholder="請輸入中文店名..."
+                name="name" required>
+              <div class="invalid-feedback">
+                請輸入店家店名
+              </div>
+
+            </div>
+            <div class="col">
+              <label for="name_en" class="form-label">英文店名</label>
+              <input type="text" class="form-control" id="name_en" aria-describedby="emailHelp" placeholder="請輸入英文店名..."
+                name="name_en">
+              <div class="valid-feedback">
+                英文店名可不用輸入
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="category" class="form-label">
+              <span class="text-danger">*</span>
+              餐廳類別
+            </label>
+            <select class="form-select" aria-label="Default select example" id="category" name="category" required>
+              <option value="">請選擇餐廳類別</option>
+              <option value="義式餐廳">義式餐廳</option>
+              <option value="美式">美式</option>
+              <option value="3">酒吧</option>
+              <option value="3">咖啡</option>
+              <option value="3">日本料理</option>
+              <option value="3">中東料理</option>
+              <option value="3">中式料理</option>
+              <option value="3">台式料理</option>
+              <option value="3">火鍋</option>
+              <option value="3">燒烤</option>
+            </select>
+            <div class="invalid-feedback">
+              請選擇種類
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="image" class="form-label">
+              <span class="text-danger">*</span>
+              圖片
+            </label>
+            <input type="url" class="form-control" id="image" placeholder="請輸入圖片網址URL..." name="image" required>
+            <div class="invalid-feedback">
+              請輸入圖片網址URL
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="location" class="form-label">
+              <span class="text-danger">*</span>
+              地址
+            </label>
+            <input type="text" class="form-control" id="location" placeholder="請輸入地址..." name="location" required>
+            <div class="invalid-feedback">
+              請輸入地址
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="google_map" class="form-label">
+              <span class="text-danger">*</span>
+              google地圖網址
+            </label>
+            <input type="text" class="form-control" id="google_map" placeholder="請輸入google地圖網址..." name="google_map"
+              required>
+            <div class="invalid-feedback">
+              請輸入google地圖網址
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="phone" class="form-label">
+              <span class="text-danger">*</span>
+              電話
+            </label>
+            <input type="text" class="form-control" id="phone" placeholder="請輸入電話號碼..." name="phone" required>
+            <div class="invalid-feedback">
+              請輸入電話號碼
+            </div>
+          </div>
+
+
+
+          <div class="mb-3 row">
+            <label for="rating" class="form-label">
+              <span class="text-danger">*</span>
+              評分
+            </label>
+            <div class="col-2">
+              <input type="number" class="form-control col-2" id="rating" name="rating" max="5" min="1" required>
+              <div class="invalid-feedback">
+                請輸入評分
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="mb-3">
+            <label for="description" class="form-label">
+              <span class="text-danger">*</span>
+              店家介紹
+            </label>
+            <textarea name="description" id="description" cols="30" rows="10" class="form-control"
+              placeholder="請介紹此店家..." required></textarea>
+            <div class="invalid-feedback">
+              請介紹此店家
+            </div>
+          </div>
+
+          <div class="mb-3 d-flex justify-content-center">
+            <button type="submit" class="btn btn-outline-success col-4 btn-create">Create</button>
+
+          </div>
+
+        </form>
+
+      </div>
+
+    </div>
+
+
+  </div>
+
+</div>
