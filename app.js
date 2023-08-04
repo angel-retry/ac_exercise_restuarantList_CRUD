@@ -17,6 +17,13 @@ app.set('views', './views') //指定views資料夾為指定的位置
 app.use(express.static('public'))
 app.use(express.static('utilities'))
 
+//可取得表單單純資料
+app.use(express.urlencoded({ extended: true }))
+
+//設置method-override
+const methodOverride = require('method-override')
+app.use(methodOverride('_method'))
+
 
 app.get('/', (req, res) => {
   res.redirect('/lists')
@@ -39,7 +46,21 @@ app.get('/lists/new', (req, res) => {
 
 //新增一家餐聽
 app.post('/lists', (req, res) => {
-  res.send("create new list")
+  const alertMessage = "新增成功! 請至首頁查看。"
+  const data = req.body
+  return List.create({
+    name: data.name,
+    name_en: data.name_en,
+    category: data.category,
+    image: data.image,
+    location: data.location,
+    phone: data.phone,
+    google_map: data.google_map,
+    rating: data.rating,
+    description: data.description,
+  })
+    .then(() => res.render('new', { alertMessage }))
+    .catch((err) => console.log(err))
 })
 
 //取得一家餐廳頁面
@@ -64,8 +85,15 @@ app.put('/todos', (req, res) => {
 })
 
 //刪除一家資訊
-app.delete('/todos', (req, res) => {
-  res.send('delete list.')
+app.delete('/lists/:id', (req, res) => {
+  const id = req.params.id
+  return List.destroy({
+    where: {
+      id
+    }
+  })
+    .then(() => res.redirect('/lists'))
+    .catch((err) => console.log(err))
 })
 
 

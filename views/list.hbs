@@ -58,11 +58,14 @@
           <button type="button" class="btn btn-brown me-1">edit</button>
         </a>
 
-        <a href="/lists/{{list.id}}">
-          <button type="button" class="btn btn-brown me-1">detail</button>
+        <a href="/lists">
+          <button type="button" class="btn btn-brown me-1">back</button>
         </a>
 
-        <button type="button" class="btn btn-outline-danger">Danger</button>
+        <form action="/lists/{{this.id}}?_method=DELETE" method="POST">
+          <button type="submit" class="btn btn-outline-danger">delete</button>
+
+        </form>
 
       </div>
 
