@@ -24,6 +24,9 @@ app.use(express.urlencoded({ extended: true }))
 const methodOverride = require('method-override')
 app.use(methodOverride('_method'))
 
+//搜尋資料要使用到的
+const { Op } = require("sequelize");
+
 
 app.get('/', (req, res) => {
   res.redirect('/lists')
@@ -67,7 +70,7 @@ app.post('/lists', (req, res) => {
 app.get('/lists/:id', (req, res) => {
   const id = req.params.id
   return List.findByPk(id, {
-    attributes: ['id', 'name', 'category', 'location', 'phone', 'description', 'image', 'rating'],
+    attributes: ['id', 'name', 'category', 'location', 'phone', 'description', 'image', 'rating', 'google_map'],
     raw: true
   })
     .then((list) => res.render('list', { list }))
@@ -122,6 +125,37 @@ app.delete('/lists/:id', (req, res) => {
     .catch((err) => console.log(err))
 })
 
+//搜尋功能
+app.post('/search', (req, res) => {
+  const keyword = req.body.keyword
+  return List.findAll({
+    attributes: ['id', 'image', 'name', 'category', 'rating'],
+    raw: true,
+    //使用Op來指應where條件
+    where: {
+      [Op.or]: [
+        {
+          name: {
+            [Op.like]: `%${keyword}%`
+          }
+        },
+        {
+          category: {
+            [Op.like]: `%${keyword}%`,
+          },
+        },
+        {
+          description: {
+            [Op.like]: `%${keyword}%`,
+          },
+        }
+
+      ]
+
+    }
+  })
+    .then((lists) => lists.length === 0 ? res.redirect('/lists') : res.render('lists', { lists, keyword }))
+})
 
 
 app.listen(port, () => {
