@@ -1,4 +1,4 @@
-![image](https://github.com/angel-retry/ac_exercise_restuarantList_CRUD/assets/71422058/39ad22d9-ba74-4b97-b8f5-d4d0ec02ead6)# 餐廳清單
+# 餐廳清單
 此網站是由Exepress + Node.js + sequelize + mySQL 製成的餐廳清單網站，可以瀏覽清單頁面、新增、刪除、編輯餐廳清單內容。
 
 ## Features - 產品功能
