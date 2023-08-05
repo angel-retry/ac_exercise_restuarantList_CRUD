@@ -24,5 +24,5 @@
 2. [Handlebars](https://handlebarsjs.com/)
 3. [express-handlebars](https://github.com/express-handlebars/express-handlebars)
 4. [Bootstrape v5.1.3](https://getbootstrap.com/)
-5. MySQL
-6. Sequelize
+5. [MySQL](https://www.mysql.com/)
+6. [Sequelize](https://sequelize.org/)
