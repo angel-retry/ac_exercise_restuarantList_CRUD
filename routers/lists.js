@@ -11,13 +11,16 @@ const { Op } = require("sequelize");
 
 
 //取得全餐廳清單
-router.get('/', (req, res) => {
+router.get('/', (req, res, next) => {
   return List.findAll({
     attributes: ['id', 'image', 'name', 'category', 'rating'],
     raw: true
   })
-    .then((lists) => res.render('lists', { lists }))
-    .catch((err) => res.status(422).json(err))
+    .then((lists) => res.render('lists', { lists, message: req.flash('success') }))
+    .catch((error) => {
+      error.errorMessage = '取得資料失敗:('
+      next(error)
+    })
 })
 
 //取得新增清單頁
@@ -26,7 +29,7 @@ router.get('/new', (req, res) => {
 })
 
 //新增一家餐聽
-router.post('/', (req, res) => {
+router.post('/', (req, res, next) => {
   const alertMessage = "新增成功! 請至首頁查看。"
   const data = req.body
   return List.create({
@@ -40,34 +43,46 @@ router.post('/', (req, res) => {
     rating: data.rating,
     description: data.description,
   })
-    .then(() => res.render('new', { alertMessage }))
-    .catch((err) => console.log(err))
+    .then(() => {
+      req.flash('success', '新增成功')
+      return res.redirect('/lists')
+    })
+    .catch((error) => {
+      error.errorMessage = '新增失敗:('
+      next(error)
+    })
 })
 
 //取得一家餐廳頁面
-router.get('/:id', (req, res) => {
+router.get('/:id', (req, res, next) => {
   const id = req.params.id
   return List.findByPk(id, {
     attributes: ['id', 'name', 'category', 'location', 'phone', 'description', 'image', 'rating', 'google_map'],
     raw: true
   })
-    .then((list) => res.render('list', { list }))
-    .catch((err) => console.log(err))
+    .then((list) => res.render('list', { list, message: req.flash('success') }))
+    .catch((error) => {
+      error.errorMessage = '取得資料失敗:('
+      next(error)
+    })
 })
 
 //取得修改一家餐廳頁面
-router.get('/:id/edit', (req, res) => {
+router.get('/:id/edit', (req, res, next) => {
   const id = req.params.id
   return List.findByPk(id, {
     attributes: ['id', 'name', 'name_en', 'category', 'image', 'location', 'phone', 'google_map', 'rating', 'description'],
     raw: true
   })
     .then((list) => res.render('edit', { list }))
-    .catch((err) => console.log(err))
+    .catch((error) => {
+      error.errorMessage = '無法取得修改資料:('
+      next(error)
+    })
 })
 
 //修改一家餐廳頁面內容
-router.put('/:id', (req, res) => {
+router.put('/:id', (req, res, next) => {
   const id = req.params.id
   const data = req.body
   return List.update({
@@ -85,26 +100,38 @@ router.put('/:id', (req, res) => {
       id
     }
   })
-    .then(() => res.redirect(`/lists/${id}`))
-    .catch((err) => console.log(err))
+    .then(() => {
+      req.flash('success', '更新成功')
+      return res.redirect(`/lists/${id}`)
+    })
+    .catch((error) => {
+      error.errorMessage = '無法取得資料:('
+      next(error)
+    })
 
 
 })
 
 //刪除一家資訊
-router.delete('/:id', (req, res) => {
+router.delete('/:id', (req, res, next) => {
   const id = req.params.id
   return List.destroy({
     where: {
       id
     }
   })
-    .then(() => res.redirect('/lists'))
-    .catch((err) => console.log(err))
+    .then(() => {
+      req.flash('success', '刪除成功')
+      return res.redirect('/lists')
+    })
+    .catch((error) => {
+      error.errorMessage = '無法刪除資料:('
+      next(error)
+    })
 })
 
 //搜尋功能
-router.post('/search', (req, res) => {
+router.post('/search', (req, res, next) => {
   const keyword = req.body.keyword
   return List.findAll({
     attributes: ['id', 'image', 'name', 'category', 'rating'],
@@ -133,6 +160,10 @@ router.post('/search', (req, res) => {
     }
   })
     .then((lists) => lists.length === 0 ? res.redirect('/lists') : res.render('lists', { lists, keyword }))
+    .catch((error) => {
+      error.errorMessage = '無法搜尋:('
+      next(error)
+    })
 })
 
 module.exports = router

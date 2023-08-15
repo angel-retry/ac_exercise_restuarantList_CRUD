@@ -3,10 +3,6 @@ const app = express()
 const port = 3000
 
 
-//設置model
-const db = require('./models')
-const List = db.List
-
 //設置express-handlebars
 const { engine } = require('express-handlebars')
 app.engine('.hbs', engine({ extname: '.hbs' })) //新增引擎樣板hbs，extname為預設的檔名
@@ -24,9 +20,29 @@ app.use(express.urlencoded({ extended: true }))
 const methodOverride = require('method-override')
 app.use(methodOverride('_method'))
 
+//設置快閃訊息
+const flash = require('connect-flash')
+const session = require('express-session')
+app.use(session({
+  secret: 'ThisIsSecret',
+  resave: false,
+  saveUninitialized: false
+}))
+app.use(flash())
+
+//message-middleware
+const messageHandler = require('./middleware/message-handler')
+app.use(messageHandler)
+
 //重製router
 const router = require('./routers')
 app.use(router)
+
+//error-handler
+const errorHandler = require('./middleware/error-handler')
+app.use(errorHandler)
+
+
 
 
 app.listen(port, () => {
