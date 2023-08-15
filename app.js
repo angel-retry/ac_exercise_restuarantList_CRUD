@@ -20,11 +20,17 @@ app.use(express.urlencoded({ extended: true }))
 const methodOverride = require('method-override')
 app.use(methodOverride('_method'))
 
+//設置環境變數
+console.log(process.env.NODE_ENV)
+if (process.env.NODE_ENV === 'development') {
+  require('dotenv').config()
+}
+
 //設置快閃訊息
 const flash = require('connect-flash')
 const session = require('express-session')
 app.use(session({
-  secret: 'ThisIsSecret',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false
 }))
