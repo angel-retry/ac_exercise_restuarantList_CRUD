@@ -2,7 +2,7 @@
 <div class="container search-bar">
   <div class="search-bar-outer">
     <div class="search-bar-inner">
-      <form action="/search" method="post">
+      <form action="/lists/search" method="post">
         <h4 class="mb-2">尋找餐廳：</h4>
         <div class="input-group">
           <input type="text" name="keyword" class="form-control" placeholder="輸入餐廳、分類" value="{{keyword}}"
@@ -59,13 +59,34 @@
 
           </div>
         </div>
-
-
-
-
-
         {{/each}}
       </div>
+
+      {{#if page}}
+      <nav aria-label="Page navigation example" class="d-flex justify-content-center">
+        <ul class="pagination">
+          <li class="page-item">
+            <form action="/lists">
+              <input type="hidden" name="page" value="{{prev}}">
+              <button type="submit" class="page-link">&laquo;</button>
+            </form>
+          </li>
+          <li class="page-item"><a class="page-link" href="#">{{page}}</a></li>
+          <li class="page-item">
+            <form action="/lists">
+              <input type="hidden" name="page" value="{{next}}">
+              <button type="submit" class="page-link">&raquo;</button>
+            </form>
+          </li>
+
+          </li>
+        </ul>
+      </nav>
+
+      {{/if}}
+
+
+
     </div>
   </div>
 </div>

@@ -12,11 +12,20 @@ const { Op } = require("sequelize");
 
 //取得全餐廳清單
 router.get('/', (req, res, next) => {
+  const page = parseInt(req.query.page) || 1
+  const limit = 9
   return List.findAll({
     attributes: ['id', 'image', 'name', 'category', 'rating'],
-    raw: true
+    raw: true,
+    offset: (page - 1) * limit,
+    limit
   })
-    .then((lists) => res.render('lists', { lists, message: req.flash('success') }))
+    .then((lists) => res.render('lists', {
+      lists,
+      page,
+      prev: page > 1 ? page - 1 : page,
+      next: page + 1
+    }))
     .catch((error) => {
       error.errorMessage = '取得資料失敗:('
       next(error)
@@ -165,5 +174,6 @@ router.post('/search', (req, res, next) => {
       next(error)
     })
 })
+
 
 module.exports = router
