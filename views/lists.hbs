@@ -1,7 +1,7 @@
 <!-- search bar -->
 <div class="container search-bar">
-  <div class="search-bar-outer">
-    <div class="search-bar-inner">
+  <div class="search-bar-outer d-flex  justify-content-between">
+    <div class="search-bar-inner col-5">
       <form action="/lists/search" method="post">
         <h4 class="mb-2">尋找餐廳：</h4>
         <div class="input-group">
@@ -13,6 +13,19 @@
         </div>
       </form>
     </div>
+    <div class="search-bar-inner col-5">
+      <h4 class="mb-2">餐廳排序：</h4>
+      <select class="form-select" aria-label="Default select example">
+        <option selected>種類</option>
+        <option value="1">A -> Z</option>
+        <option value="2">Z -> A</option>
+        <option value="3">類別</option>
+        <option value="4">地區</option>
+      </select>
+
+    </div>
+
+
   </div>
 </div>
 
