@@ -26,7 +26,7 @@ cd ac_exercise_restuarantList_CRUD
 ```
 npm install
 ```
-4. 請查看config資料夾中的config.json檔中development資訊，請打開MySQL Workbentch建立database名為resturant_list，也請確認資料庫username、password及host內容是否development資訊內容相同(如果不同，應可修改development資訊內容，以致可連接你的MySQL Workbentch)。
+4. 請查看config資料夾中的config.json檔中development資訊，請打開MySQL Workbentch建立database名為resturant_list，也請確認資料庫username、password及host內容是否與development資訊內容相同(如果不同，應可修改development資訊內容，以致可連接你的MySQL Workbentch)。
 ```js
 "development": {
     "username": "root",
@@ -36,7 +36,7 @@ npm install
     "dialect": "mysql"
   }
 ```
-5. 請在終端機輸入以下內容。透過sequelize連接至資料庫，查看MySQL Workbentch的Schemas，重新整理後resturant_listy資料庫當中是否有出現此lists資料表以及sequelizemeta資料表出現，有的話連接成功。
+5. 請在終端機輸入以下內容。透過sequelize連接至資料庫，查看MySQL Workbentch的Schemas，重新整理後resturant_listy資料庫當中是否有出現此lists資料表以及sequelizemeta資料表出現，有的話代表連接成功。
 ```
 npx sequelize db:migrate
 ```
@@ -50,7 +50,7 @@ npx sequelize db:seed:all
 SESSION_SECRET='xxxxxxx'
 ```
 
-8. 請在終端機輸入以下內容，因此專案要在development狀態才可開啟，為了讀取上一部設置的環境變數SESSION_SECRET，但請注意是否有設置過SESSION_SECRET命名變數過。
+8. 請在終端機輸入以下內容，此專案要在development狀態才可開啟，為了讀取上一步設置的環境變數SESSION_SECRET，但請注意是否有設置過SESSION_SECRET命名變數過。
 ```
 export NODE_ENV = development
 
