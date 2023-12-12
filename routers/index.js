@@ -9,6 +9,40 @@ const User = db.User
 
 const bcryptjs = require('bcryptjs')
 
+const passport = require('passport')
+const LocalStrategy = require('passport-local')
+
+passport.use(new LocalStrategy({ usernameField: 'email' }, (username, password, done) => {
+  return User.findOne({
+    attribute: ['id', 'name', 'email', 'password'],
+    where: { email: username },
+    raw: true
+  })
+    .then((user) => {
+      if (!user) {
+        return done(null, false, { message: '帳號或密碼錯誤!' })
+      }
+
+      return bcryptjs.compare(password, user.password)
+        .then((isMatch) => {
+          if (!isMatch) {
+            return done(null, false, { message: '密碼錯誤!' })
+          }
+          return done(null, user)
+        })
+
+    })
+    .catch((error) => {
+      error.errorMessage = '登入失敗!'
+      done(error)
+    })
+}))
+
+passport.serializeUser((user, done) => {
+  const { id, name, email } = user
+  return done(null, { id, email, name })
+})
+
 
 router.use('/lists', lists)
 
@@ -24,7 +58,13 @@ router.get('/register', (req, res) => {
   res.render('register')
 })
 
-router.post('/login', (req, res) => {
+router.post('/login', passport.authenticate('local', {
+  successRedirect: '/lists',
+  failureRedirect: '/login',
+  failureFlash: true
+}))
+
+router.post('/register', (req, res) => {
   const { name, email, password, confirmPassword } = req.body
 
   if (!name) {
@@ -61,13 +101,10 @@ router.post('/login', (req, res) => {
             })
         })
     })
-
-
-
 })
 
-router.post('/register', (req, res) => {
-  res.send('logout')
+router.post('/logout', (req, res) => {
+  res.send('Logout')
 })
 
 

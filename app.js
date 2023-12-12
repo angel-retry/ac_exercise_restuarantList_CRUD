@@ -2,6 +2,8 @@ const express = require('express')
 const app = express()
 const port = 3000
 
+const password = require('passport')
+
 
 //設置express-handlebars
 const { engine } = require('express-handlebars')
@@ -35,6 +37,8 @@ app.use(session({
   saveUninitialized: false
 }))
 app.use(flash())
+
+app.use(passport.initialize())
 
 //message-middleware
 const messageHandler = require('./middleware/message-handler')
