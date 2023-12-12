@@ -8,24 +8,26 @@ const List = db.List
 //搜尋資料要使用到的
 const { Op } = require("sequelize");
 
-
-
 //取得全餐廳清單
 router.get('/', (req, res, next) => {
+  const userId = req.user.id
   const page = parseInt(req.query.page) || 1
   const limit = 9
   return List.findAll({
     attributes: ['id', 'image', 'name', 'category', 'rating'],
+    where: { userId },
     raw: true,
     offset: (page - 1) * limit,
     limit
   })
-    .then((lists) => res.render('lists', {
-      lists,
-      page,
-      prev: page > 1 ? page - 1 : page,
-      next: page + 1
-    }))
+    .then((lists) => {
+      res.render('lists', {
+        lists,
+        page,
+        prev: page > 1 ? page - 1 : page,
+        next: page + 1
+      })
+    })
     .catch((error) => {
       error.errorMessage = '取得資料失敗:('
       next(error)
@@ -39,7 +41,7 @@ router.get('/new', (req, res) => {
 
 //新增一家餐聽
 router.post('/', (req, res, next) => {
-  const alertMessage = "新增成功! 請至首頁查看。"
+  const userId = req.user.id
   const data = req.body
   return List.create({
     name: data.name,
@@ -51,9 +53,10 @@ router.post('/', (req, res, next) => {
     google_map: data.google_map,
     rating: data.rating,
     description: data.description,
+    userId: userId
   })
     .then(() => {
-      req.flash('success', '新增成功')
+      req.flash('success', '新增成功! 請至首頁查看。')
       return res.redirect('/lists')
     })
     .catch((error) => {
@@ -64,12 +67,23 @@ router.post('/', (req, res, next) => {
 
 //取得一家餐廳頁面
 router.get('/:id', (req, res, next) => {
+  const userId = req.user.id
   const id = req.params.id
   return List.findByPk(id, {
-    attributes: ['id', 'name', 'category', 'location', 'phone', 'description', 'image', 'rating', 'google_map'],
+    attributes: ['id', 'name', 'category', 'location', 'phone', 'description', 'image', 'rating', 'google_map', 'userId'],
     raw: true
   })
-    .then((list) => res.render('list', { list, message: req.flash('success') }))
+    .then((list) => {
+      if (!list) {
+        req.flash('error', '無此餐廳資料喔!')
+        return res.redirect('/lists')
+      }
+      if (userId !== list.userId) {
+        req.flash('error', '你沒有權限瀏覽此資料喔!')
+        return res.redirect('/lists')
+      }
+      res.render('list', { list, message: req.flash('success') })
+    })
     .catch((error) => {
       error.errorMessage = '取得資料失敗:('
       next(error)
@@ -79,11 +93,22 @@ router.get('/:id', (req, res, next) => {
 //取得修改一家餐廳頁面
 router.get('/:id/edit', (req, res, next) => {
   const id = req.params.id
+  const userId = req.user.id
   return List.findByPk(id, {
-    attributes: ['id', 'name', 'name_en', 'category', 'image', 'location', 'phone', 'google_map', 'rating', 'description'],
+    attributes: ['id', 'name', 'name_en', 'category', 'image', 'location', 'phone', 'google_map', 'rating', 'description', 'userId'],
     raw: true
   })
-    .then((list) => res.render('edit', { list }))
+    .then((list) => {
+      if (!list) {
+        req.flash('error', '無此餐廳資料喔!')
+        return res.redirect('/lists')
+      }
+      if (userId !== list.userId) {
+        req.flash('error', '你沒有權限瀏覽此資料喔!')
+        return res.redirect('/lists')
+      }
+      res.render('edit', { list })
+    })
     .catch((error) => {
       error.errorMessage = '無法取得修改資料:('
       next(error)
@@ -93,49 +118,68 @@ router.get('/:id/edit', (req, res, next) => {
 //修改一家餐廳頁面內容
 router.put('/:id', (req, res, next) => {
   const id = req.params.id
+  const userId = req.user.id
   const data = req.body
-  return List.update({
-    name: data.name,
-    name_en: data.name_en,
-    category: data.category,
-    image: data.image,
-    location: data.location,
-    phone: data.phone,
-    google_map: data.google_map,
-    rating: data.rating,
-    description: data.description,
-  }, {
-    where: {
-      id
-    }
+  return List.findByPk(id, {
+    attributes: ['id', 'name', 'name_en', 'category', 'image', 'location', 'phone', 'google_map', 'rating', 'description', 'userId']
   })
-    .then(() => {
-      req.flash('success', '更新成功')
-      return res.redirect(`/lists/${id}`)
+    .then((list) => {
+      if (!list) {
+        req.flash('error', '無此餐廳資料喔!')
+        return res.redirect('/lists')
+      }
+      if (userId !== list.userId) {
+        req.flash('error', '你沒有權限瀏覽此資料喔!')
+        return res.redirect('/lists')
+      }
+      return list.update({
+        name: data.name,
+        name_en: data.name_en,
+        category: data.category,
+        image: data.image,
+        location: data.location,
+        phone: data.phone,
+        google_map: data.google_map,
+        rating: data.rating,
+        description: data.description
+      })
+        .then(() => {
+          req.flash('success', '更新成功!')
+          return res.redirect(`/lists/${id}`)
+        })
     })
     .catch((error) => {
-      error.errorMessage = '無法取得資料:('
+      error.errorMessage = '更新失敗!'
       next(error)
     })
-
-
 })
 
 //刪除一家資訊
 router.delete('/:id', (req, res, next) => {
   const id = req.params.id
-  return List.destroy({
-    where: {
-      id
-    }
+  const userId = req.user.id
+  
+  return List.findByPk(id, {
+    attributes: ['id', 'name', 'name_en', 'category', 'image', 'location', 'phone', 'google_map', 'rating', 'description', 'userId']
   })
-    .then(() => {
-      req.flash('success', '刪除成功')
-      return res.redirect('/lists')
-    })
-    .catch((error) => {
-      error.errorMessage = '無法刪除資料:('
-      next(error)
+    .then((list) => {
+      if (!list) {
+        req.flash('error', '無此餐廳資料喔!')
+        return res.redirect('/lists')
+      }
+      if (userId !== list.userId) {
+        req.flash('error', '你沒有權限瀏覽此資料喔!')
+        return res.redirect('/lists')
+      }
+      return list.destroy()
+        .then(() => {
+          req.flash('success', '刪除成功')
+          return res.redirect('/lists')
+        })
+        .catch((error) => {
+          error.errorMessage = '無法刪除資料:('
+          next(error)
+        })
     })
 })
 
