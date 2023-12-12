@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      List.belongsTo(models.User)
     }
   }
   List.init({
@@ -23,6 +23,10 @@ module.exports = (sequelize, DataTypes) => {
     google_map: DataTypes.STRING,
     rating: DataTypes.FLOAT,
     description: DataTypes.TEXT,
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    }
   }, {
     sequelize,
     modelName: 'List',
