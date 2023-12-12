@@ -1,0 +1,36 @@
+<div class="container-fluid p-0 d-flex" style="overflow: hidden; height: 100vh;">
+  <div class="col">
+    <img src="https://i.pinimg.com/564x/05/5e/4e/055e4e82d548029f91d96c30499341fb.jpg" alt="food" width="100%"
+      height="auto">
+  </div>
+  <div class="col justify-content-center m-5 p-5">
+    <div class="m-3">
+      <h1 class="fw-bold">歡迎來到餐廳評論網站!</h1>
+      <p class="fw-light">請登入帳號。</p>
+      {{> message}}
+    </div>
+    <form action="/login" method="post">
+      <div class="m-3">
+        <label for="email" class="form-label">帳號</label>
+        <input type="text" class="form-control" id="email" placeholder="請輸入電子信箱">
+      </div>
+
+      <div class="m-3">
+        <label for="password" class="form-label">密碼</label>
+        <input type="password" class="form-control" id="password" placeholder="請輸入密碼">
+      </div>
+
+
+
+      <div class="d-grid gap-2 col-6 mx-auto">
+        <button type="submit" class="btn btn-brown m-3 ">
+          Login
+        </button>
+      </div>
+    </form>
+    <p class="text-body-secondary m-3">
+      沒有帳號? 點選這裡可以<a href="./register" class="text-primary">註冊</a>喔。
+    </p>
+
+  </div>
+</div>

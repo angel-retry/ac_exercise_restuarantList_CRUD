@@ -1,0 +1,56 @@
+<div class="container-fluid p-0 d-flex" style="overflow: hidden; height: 100vh;">
+  <div class="col">
+    <img src="https://i.pinimg.com/564x/05/5e/4e/055e4e82d548029f91d96c30499341fb.jpg" alt="food" width="100%"
+      height="auto">
+  </div>
+  <div class="col justify-content-center m-5 p-5 mt-1 pt-3">
+    <div class="m-3">
+      <h1 class="fw-bold">歡迎註冊帳號!</h1>
+      <p class="fw-light">請輸入以下內容。</p>
+    </div>
+    <form action="/login" method="post" class="needs-validation">
+      <div class="m-3">
+        <label for="name" class="form-label">姓名</label>
+        <input type="text" name="name" class="form-control" id="name" placeholder="請輸入姓名" required>
+        <div class="invalid-feedback">
+          請輸入你的名字。
+        </div>
+      </div>
+
+      <div class="m-3">
+        <label for="email" class="form-label">帳號</label>
+        <input type="text" name="email" class="form-control" id="email" placeholder="請輸入電子信箱" required>
+        <div class="invalid-feedback">
+          請輸入你的信箱。
+        </div>
+      </div>
+
+      <div class="m-3">
+        <label for="password" class="form-label">密碼</label>
+        <input type="password" name="password" class="form-control" id="password" placeholder="請輸入密碼" required>
+        <div class="invalid-feedback">
+          請輸入你的密碼。
+        </div>
+      </div>
+
+      <div class="m-3">
+        <label for="confirmPassword" class="form-label">確認密碼</label>
+        <input type="password" class="form-control" name="confirmPassword" id="confirmPassword" placeholder="請再輸入一次密碼"
+          required>
+        <div class="invalid-feedback">
+          請輸入你的確認密碼。
+        </div>
+      </div>
+
+      <div class="d-grid gap-2 col-6 mx-auto">
+        <button type="submit" class="btn btn-brown m-3 btn-create">
+          Register
+        </button>
+      </div>
+    </form>
+    <p class="text-body-secondary m-3">
+      已經註冊過了? 點選這裡可以<a href="/login" class="text-primary">登入</a>喔。
+    </p>
+
+  </div>
+</div>
