@@ -8,7 +8,8 @@
       <h1 class="fw-bold">歡迎註冊帳號!</h1>
       <p class="fw-light">請輸入以下內容。</p>
     </div>
-    <form action="/register" method="post" class="needs-validation">
+    {{>message}}
+    <form action="/register" method="post" class="needs-validation" novalidate>
       <div class="m-3">
         <label for="name" class="form-label">姓名</label>
         <input type="text" name="name" class="form-control" id="name" placeholder="請輸入姓名" required>

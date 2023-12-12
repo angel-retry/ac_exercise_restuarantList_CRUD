@@ -7,23 +7,30 @@
     <div class="m-3">
       <h1 class="fw-bold">歡迎來到餐廳評論網站!</h1>
       <p class="fw-light">請登入帳號。</p>
-      {{> message}}
+      {{>message}}
     </div>
-    <form action="/login" method="post">
+    <form action="/login" method="post" novalidate class="needs-validation">
       <div class="m-3">
         <label for="email" class="form-label">帳號</label>
-        <input type="text" class="form-control" id="email" placeholder="請輸入電子信箱">
+        <input type="text" class="form-control" id="email" name="email" placeholder="請輸入電子信箱" required>
+        <div class="invalid-feedback">
+          請輸入帳號!
+        </div>
+
       </div>
 
       <div class="m-3">
         <label for="password" class="form-label">密碼</label>
-        <input type="password" class="form-control" id="password" placeholder="請輸入密碼">
+        <input type="password" class="form-control" name="password" placeholder="請輸入密碼" required>
+        <div class="invalid-feedback">
+          請輸入密碼!
+        </div>
       </div>
 
 
 
       <div class="d-grid gap-2 col-6 mx-auto">
-        <button type="submit" class="btn btn-brown m-3 ">
+        <button type="submit" class="btn btn-brown m-3 btn-create">
           Login
         </button>
       </div>
