@@ -4,6 +4,12 @@ const port = 3000
 
 const passport = require('passport')
 
+//設置環境變數
+console.log(process.env.NODE_ENV)
+if (process.env.NODE_ENV === 'development') {
+  require('dotenv').config()
+}
+
 
 //設置express-handlebars
 const { engine } = require('express-handlebars')
@@ -22,11 +28,7 @@ app.use(express.urlencoded({ extended: true }))
 const methodOverride = require('method-override')
 app.use(methodOverride('_method'))
 
-//設置環境變數
-console.log(process.env.NODE_ENV)
-if (process.env.NODE_ENV === 'development') {
-  require('dotenv').config()
-}
+
 
 //設置快閃訊息
 const flash = require('connect-flash')

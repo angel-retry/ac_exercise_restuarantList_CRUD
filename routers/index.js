@@ -10,6 +10,7 @@ const bcryptjs = require('bcryptjs')
 
 const passport = require('passport')
 const LocalStrategy = require('passport-local')
+const FacebookStrategy = require('passport-facebook')
 
 const authHandler = require('../middleware/auth-handler')
 
@@ -35,6 +36,42 @@ passport.use(new LocalStrategy({ usernameField: 'email' }, (username, password, 
       error.errorMessage = '登入失敗'
       done(error)
     })
+}))
+
+passport.use(new FacebookStrategy({
+  clientID: process.env.FACEBOOK_CLIENT_ID,
+  clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
+  callbackURL: process.env.FACEBOOK_CALLBACK_URL,
+  profileFields: ['email', 'displayName']
+}, (accessToken, refreshToken, profile, done) => {
+  const email = profile.emails[0].value
+  const name = profile.displayName
+
+  return User.findOne({
+    attributes: ['id', 'email', 'name'],
+    where: { email },
+    raw: true
+  })
+    .then((user) => {
+      if (user) {
+        return done(null, user)
+      }
+
+      const randomPwd = Math.random().toString(36).slice(-8)
+
+      return bcryptjs.hash(randomPwd, 10)
+        .then((hash) => {
+          return User.create({ name, email, password: hash })
+        })
+        .then((user) => {
+          done(null, { id: user.id, name: user.name, email: user.email })
+        })
+    })
+    .catch((error) => {
+      error.errorMessage = '登入失敗!'
+      return done(error)
+    })
+
 }))
 
 passport.serializeUser((user, done) => {
@@ -101,7 +138,15 @@ router.post('/register', (req, res) => {
     })
 })
 
-router.post('/login', passport.authenticate('local', {
+router.get('/login', passport.authenticate('local', {
+  successRedirect: '/lists',
+  failureRedirect: '/login',
+  failureFlash: true
+}))
+
+router.get('/login/facebook', passport.authenticate('facebook', { scope: ['email'] }))
+
+router.get('/oauth2/redirect/facebook', passport.authenticate('facebook', {
   successRedirect: '/lists',
   failureRedirect: '/login',
   failureFlash: true
