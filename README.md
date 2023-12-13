@@ -83,17 +83,17 @@ Example app listening on port 3000
 11.現在，可開啟任一瀏覽器輸入[http://localhost:3000](http://localhost:3000) 開始使用此網站。
 
 ## Development tool - 開發工具
-bcryptjs: ^2.4.3
-connect-flash: ^0.1.1
-dotenv: ^16.0.3
-express: ^4.18.2
-express-handlebars: ^7.0.4
-express-session: ^1.17.3
-handlebars: ^4.7.8
-method-override: ^3.0.0
-mysql2: ^3.2.0
-passport: ^0.6.0
-passport-facebook: ^3.0.0
-passport-local: ^1.0.0
-sequelize: ^6.30.0
-sequelize-cli: ^6.6.0
+1. bcryptjs: ^2.4.3
+2. connect-flash: ^0.1.1
+3. dotenv: ^16.0.3
+4. express: ^4.18.2
+5. express-handlebars: ^7.0.4
+6. express-session: ^1.17.3
+7. handlebars: ^4.7.8
+8. method-override: ^3.0.0
+9. mysql2: ^3.2.0
+10. passport: ^0.6.0
+11. passport-facebook: ^3.0.0
+12. passport-local: ^1.0.0
+13. sequelize: ^6.30.0
+14. sequelize-cli: ^6.6.0
