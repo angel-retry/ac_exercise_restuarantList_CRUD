@@ -81,6 +81,12 @@ npm run dev
 Example app listening on port 3000
 ```
 11.現在，可開啟任一瀏覽器輸入[http://localhost:3000](http://localhost:3000) 開始使用此網站。
+12. 可以使用以下帳號登入: 
+```
+email: user1@example.com
+password: 12345678
+```
+
 
 ## Development tool - 開發工具
 1. bcryptjs: ^2.4.3
