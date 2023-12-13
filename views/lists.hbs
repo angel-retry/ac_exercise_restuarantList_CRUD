@@ -14,18 +14,19 @@
         </div>
       </form>
     </div>
+
     <div class="search-bar-inner col-5">
-      <h4 class="mb-2">餐廳排序：</h4>
-      <select class="form-select" aria-label="Default select example">
-        <option selected>種類</option>
-        <option value="1">A -> Z</option>
-        <option value="2">Z -> A</option>
-        <option value="3">類別</option>
-        <option value="4">地區</option>
-      </select>
-
+      <form action="/lists" method="get">
+        <h4 class="mb-2">餐廳排序：</h4>
+        <select class="form-select" aria-label="Default select example" name="sort" onchange="this.form.submit()">
+          <option selected disabled>種類</option>
+          <option value="name_ASC" {{#if (eq sort 'name_ASC' )}}selected{{/if}}>A -> Z</option>
+          <option value="name_DESC" {{#if (eq sort 'name_DESC' )}}selected{{/if}}>Z -> A</option>
+          <option value="category" {{#if (eq sort 'category' )}}selected{{/if}}>類別</option>
+          <option value="location" {{#if (eq sort 'location' )}}selected{{/if}}>地區</option>
+        </select>
+      </form>
     </div>
-
 
   </div>
 </div>

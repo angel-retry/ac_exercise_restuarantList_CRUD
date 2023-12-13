@@ -13,11 +13,35 @@ router.get('/', (req, res, next) => {
   const userId = req.user.id
   const page = parseInt(req.query.page) || 1
   const limit = 9
+
+  //傳送種類排法
+  let sort = req.query.sort || 'name_ASC'
+  switch (sort) {
+    case 'name_ASC':
+      sort = { sort: 'name_ASC', sortOrder: [['name', 'ASC']] }
+      break;
+
+    case 'name_DESC':
+      sort = { sort: 'name_DESC', sortOrder: [['name', 'DESC']] }
+      break;
+
+    case 'category':
+      sort = { sort: 'category', sortOrder: [['category', 'ASC']] }
+      break;
+
+    default:
+      sort = { sort: 'location', sortOrder: [['location', 'ASC']] }
+      break;
+  }
+
+  console.log(sort.sort, sort.sortOrder)
+
   return List.findAll({
     attributes: ['id', 'image', 'name', 'category', 'rating'],
     where: { userId },
     raw: true,
     offset: (page - 1) * limit,
+    order: sort.sortOrder,
     limit
   })
     .then((lists) => {
@@ -25,7 +49,8 @@ router.get('/', (req, res, next) => {
         lists,
         page,
         prev: page > 1 ? page - 1 : page,
-        next: page + 1
+        next: page + 1,
+        sort: sort.sort //回傳sort的key值
       })
     })
     .catch((error) => {

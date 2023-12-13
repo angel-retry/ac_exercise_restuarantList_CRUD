@@ -12,6 +12,18 @@ if (process.env.NODE_ENV === 'development') {
 
 
 //設置express-handlebars
+const handlebars = require('handlebars')
+
+handlebars.registerHelper('eq', (arg1, arg2) => {
+  return arg1 === arg2
+})
+handlebars.registerHelper('or', (arg1, arg2) => {
+  return arg1 || arg2
+})
+handlebars.registerHelper('not', (arg) => {
+  return !arg
+})
+
 const { engine } = require('express-handlebars')
 app.engine('.hbs', engine({ extname: '.hbs' })) //新增引擎樣板hbs，extname為預設的檔名
 app.set('view engine', '.hbs') //開始啟用hbs樣板
