@@ -5,10 +5,7 @@ const port = 3000
 const passport = require('passport')
 
 //設置環境變數
-console.log(process.env.NODE_ENV)
-if (process.env.NODE_ENV === 'development') {
-  require('dotenv').config()
-}
+require('dotenv').config()
 
 
 //設置express-handlebars
@@ -50,6 +47,7 @@ app.use(session({
   resave: false,
   saveUninitialized: false
 }))
+
 app.use(flash())
 
 app.use(passport.initialize())
