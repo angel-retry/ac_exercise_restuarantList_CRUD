@@ -1,17 +1,20 @@
 # 餐廳清單
-此網站是由Exepress + Node.js + sequelize + mySQL 製成的餐廳清單網站，可以瀏覽清單頁面、新增、刪除、編輯餐廳清單內容。
+此網站是由Exepress + Node.js + sequelize + mySQL 製成的餐廳清單網站，可以瀏覽清單頁面、新增、刪除、編輯餐廳清單內容，以及有登入登出系統。
 
 ## Features - 產品功能
 
-1. 使用者可以使用搜尋功能查詢餐廳。
-2. 使用者可以新增一間餐廳頁面資訊。
-3. 使用者可以編輯現有的餐廳頁面資訊。
-4. 使用者可以刪除現有的餐廳頁面資訊。
+1. 使用者可以註冊帳號。
+2. 使用者可以使用FACEBOOK帳號登入。
+3. 使用者可以使用搜尋功能查詢餐廳。
+4. 使用者可以新增一間餐廳頁面資訊。
+5. 使用者可以編輯現有的餐廳頁面資訊。
+6. 使用者可以刪除現有的餐廳頁面資訊。
+   
 
 ## Screen Photo - 專案畫面
-![image](https://github.com/angel-retry/ac_exercise_restuarantList_CRUD/assets/71422058/dddb2841-f84c-4b2c-895a-7f14266ae143)
-![image](https://github.com/angel-retry/ac_exercise_restuarantList_CRUD/assets/71422058/a4331b69-097f-42de-9aff-bcd3ab133080)
-![image](https://github.com/angel-retry/ac_exercise_restuarantList_CRUD/assets/71422058/ca87ee55-3baa-4fcb-a06e-67eeffecf96a)
+![image](https://github.com/angel-retry/ac_exercise_restuarantList_CRUD/assets/71422058/58802488-ab17-4756-aa3c-e058b32a8657)
+![image](https://github.com/angel-retry/ac_exercise_restuarantList_CRUD/assets/71422058/53acb62f-b45c-4586-9903-ebf85213fea1)
+
 
 ## Installing - 專案安裝流程
 1. 請選擇好此專案存放位置後，打開terminal，並且cd到剛選擇好的專案位置，輸入下列指令，完成複製此專案(以下指令都在terminal內完成)。
@@ -46,11 +49,15 @@ npx sequelize db:seed:all
 ```
 
 7. 請建立.env檔案，設置環境變數SESSION_SECRET，此檔案內容可參考.env.example內容，xxxxx為你要輸入變數(請隨意命名)。
+   其中 clientID 與 clientSecret 需要到個人的 [Facebook for developersLinks](https://developers.facebook.com/)取得應用程式編號、應用程式密鑰。
 ```
-SESSION_SECRET='xxxxxxx'
+SESSION_SECRET = SKIP
+FACEBOOK_CLIENT_ID=SKIP
+FACEBOOK_CLIENT_SECRET=SKIP
+FACEBOOK_CALLBACK_URL=SKIP
 ```
 
-8. 請在終端機輸入以下內容，此專案要在development狀態才可開啟，為了讀取上一步設置的環境變數SESSION_SECRET，但請注意是否有設置過SESSION_SECRET命名變數過。
+8. 請在終端機輸入以下內容，此專案要在development狀態才可開啟，但請注意是否有設置過SESSION_SECRET命名變數過。
 ```
 export NODE_ENV = development
 
@@ -73,17 +80,26 @@ npm run dev
 [nodemon] starting `node app.js`
 Example app listening on port 3000
 ```
-11.現在，可開啟任一瀏覽器輸入[http://localhost:3000](http://localhost:3000) 開始使用此網站。
+11. 現在，可開啟任一瀏覽器輸入[http://localhost:3000](http://localhost:3000) 開始使用此網站。
+12. 可以使用以下帳號登入:
+```
+email: user1@example.com
+password: 12345678
+```
 
-
-
-## Contributor - 專案開發人員
-> [Enju Wei](https://github.com/angel-retry)
 
 ## Development tool - 開發工具
-1. [Node.js](https://nodejs.org/en/)
-2. [Handlebars](https://handlebarsjs.com/)
-3. [express-handlebars](https://github.com/express-handlebars/express-handlebars)
-4. [Bootstrape v5.1.3](https://getbootstrap.com/)
-5. [MySQL](https://www.mysql.com/)
-6. [Sequelize](https://sequelize.org/)
+1. bcryptjs: ^2.4.3
+2. connect-flash: ^0.1.1
+3. dotenv: ^16.0.3
+4. express: ^4.18.2
+5. express-handlebars: ^7.0.4
+6. express-session: ^1.17.3
+7. handlebars: ^4.7.8
+8. method-override: ^3.0.0
+9. mysql2: ^3.2.0
+10. passport: ^0.6.0
+11. passport-facebook: ^3.0.0
+12. passport-local: ^1.0.0
+13. sequelize: ^6.30.0
+14. sequelize-cli: ^6.6.0
