@@ -57,18 +57,11 @@ FACEBOOK_CLIENT_SECRET=SKIP
 FACEBOOK_CALLBACK_URL=SKIP
 ```
 
-8. 請在終端機輸入以下內容，此專案要在development狀態才可開啟，但請注意是否有設置過SESSION_SECRET命名變數過。
-```
-export NODE_ENV = development
-
-//假如再設置.env檔之前有宣告過SESSION_SECRET，記得在終端機輸入指令把它刪掉，避免混淆
-unset SESSION_SECRET
-```
-9. 以上，已成功連接MySQL資料庫且有匯入seed資料，可以開始使用此網站，輸入以下內容開啟網站。
+8. 以上，已成功連接MySQL資料庫且有匯入seed資料，可以開始使用此網站，輸入以下內容開啟網站。
 ```
 npm run dev
 ```
-10. 接下來會在terminal看到以下內容，代表伺服器建立成功。
+9. 接下來會在terminal看到以下內容，代表伺服器建立成功。
 ```
 > restaurant-list@1.0.0 dev
 > nodemon app.js
@@ -80,8 +73,8 @@ npm run dev
 [nodemon] starting `node app.js`
 Example app listening on port 3000
 ```
-11. 現在，可開啟任一瀏覽器輸入[http://localhost:3000](http://localhost:3000) 開始使用此網站。
-12. 可以使用以下帳號登入:
+10. 現在，可開啟任一瀏覽器輸入[http://localhost:3000](http://localhost:3000) 開始使用此網站。
+11. 可以使用以下帳號登入:
 ```
 email: user1@example.com
 password: 12345678
